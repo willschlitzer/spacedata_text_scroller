@@ -13,7 +13,7 @@ def astros():
     astronauts = []
     # Returns the number of people in space, and the dictionaries for the astronauts and their craft
     for astronaut in astrocrafts:
-        astronauts.append(astronaut['name'])
+        astronauts.append(astronaut["name"])
     return astros_number, astronauts
 
 

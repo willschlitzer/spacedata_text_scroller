@@ -33,20 +33,25 @@ def get_launch_info(launch_json, launch_num=1):
     confirmed_launches = confirm_launch_status(launch_json=launch_json)
     return confirmed_launches[:launch_num]
 
-def confirm_launch_status(launch_json, launch_status = 1):
+
+def confirm_launch_status(launch_json, launch_status=1):
     confirmed_launches = []
     for launch in launch_json:
-        if launch['status'] == launch_status:
+        if launch["status"] == launch_status:
             launch_info = parse_launch_data(launch)
             confirmed_launches.append(launch_info)
     return confirmed_launches
 
+
 def parse_launch_data(single_launch):
     launch_dict = {}
-    launch_dict['name'] = single_launch['name']
-    launch_dict['date'] = single_launch['windowstart']
-    launch_dict['date_obj'] = datetime.datetime.strptime(single_launch['windowstart'] , "%B %d, %Y %H:%M:%S %Z")
+    launch_dict["name"] = single_launch["name"]
+    launch_dict["date"] = single_launch["windowstart"]
+    launch_dict["date_obj"] = datetime.datetime.strptime(
+        single_launch["windowstart"], "%B %d, %Y %H:%M:%S %Z"
+    )
     return launch_dict
+
 
 def main():
     upcoming_launch_url = get_launch_url()
