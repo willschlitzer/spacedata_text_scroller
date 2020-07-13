@@ -1,11 +1,12 @@
 import requests
 import time
+import datetime
 
 
 def get_launch_url():
     """Creates the URL string with the requested number of launches"""
     basic_launch_url = "https://launchlibrary.net/1.4/launch/next/"
-    launch_num = 1
+    launch_num = 5
     return basic_launch_url + str(launch_num)
 
 
@@ -24,10 +25,29 @@ def get_launch_json(url):
     return launch_data["launches"]
 
 
+def get_launch_info(launch_json, launch_num=1):
+    confirmed_launches = confirm_launch_status(launch_json=launch_json)
+    return confirmed_launches[:launch_num]
+
+def confirm_launch_status(launch_json, launch_status = 1):
+    confirmed_launches = []
+    for launch in launch_json:
+        if launch['status'] == launch_status:
+            launch_info = parse_launch_data(launch)
+            confirmed_launches.append(launch_info)
+    return confirmed_launches
+
+def parse_launch_data(single_launch):
+    launch_dict = {}
+    launch_dict['name'] = single_launch['name']
+    launch_dict['date'] = single_launch['windowstart']
+    return launch_dict
+
 def main():
     upcoming_launch_url = get_launch_url()
     launch_json = get_launch_json(upcoming_launch_url)
-    print(launch_json)
+    upcoming_launch = get_launch_info(launch_json=launch_json, launch_num=1)
+    print(upcoming_launch)
 
 
 if __name__ == "__main__":
