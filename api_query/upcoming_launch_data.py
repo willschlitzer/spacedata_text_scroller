@@ -14,12 +14,16 @@ def get_launch_json(url):
     """Retrieves the upcoming launch data and returns it as a JSON object"""
     # Create a Boolean object for error handling.
     data_retrieval = False
+    error_count = 0
     while not data_retrieval:
         try:
             launch_data = requests.get(url).json()
             data_retrieval = True
         except:
             print("Error querying API, sleeping for 10 seconds")
+            error_count += 1
+            if error_count > 10:
+                raise
             time.sleep(10)
 
     return launch_data["launches"]
