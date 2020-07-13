@@ -45,13 +45,14 @@ def parse_launch_data(single_launch):
     launch_dict = {}
     launch_dict['name'] = single_launch['name']
     launch_dict['date'] = single_launch['windowstart']
+    launch_dict['date_obj'] = datetime.datetime.strptime(single_launch['windowstart'] , "%B %d, %Y %H:%M:%S %Z")
     return launch_dict
 
 def main():
     upcoming_launch_url = get_launch_url()
     launch_json = get_launch_json(upcoming_launch_url)
-    upcoming_launch = get_launch_info(launch_json=launch_json, launch_num=1)
-    print(upcoming_launch)
+    upcoming_launches = get_launch_info(launch_json=launch_json, launch_num=1)
+    return upcoming_launches
 
 
 if __name__ == "__main__":
